@@ -6,4 +6,7 @@ export default gql`
         Description: String
         Title: String
     }
+    extend type Query {
+        currenttypes: [CurrentType]
+    }
 `;

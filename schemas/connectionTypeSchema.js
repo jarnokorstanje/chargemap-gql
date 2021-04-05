@@ -6,4 +6,7 @@ export default gql`
         FormalName: String
         Title: String
     }
+    extend type Query {
+        connectiontypes: [ConnectionType]
+    }
 `;

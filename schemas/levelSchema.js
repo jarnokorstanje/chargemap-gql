@@ -7,4 +7,7 @@ export default gql`
         Comments: String
         IsFastChargeCapable: Boolean
     }
+    extend type Query {
+        leveltypes: [Level]
+    }
 `;
