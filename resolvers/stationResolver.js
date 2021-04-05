@@ -10,5 +10,8 @@ export default {
                 console.log(`Error occured while getting the stations: ${e.message}`);
             }
         },
+        station: async (parent, args) => {
+            return Station.findById(args.id);
+        },
     },
 };

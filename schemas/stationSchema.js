@@ -17,5 +17,6 @@ export default gql`
     }
     extend type Query {
         stations: [Station]
+        station(id: ID!): Station
     }
 `;
