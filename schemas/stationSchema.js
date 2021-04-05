@@ -16,7 +16,7 @@ export default gql`
         coordinates: [Float]
     }
     extend type Query {
-        stations: [Station]
+        stations(start: Int!, limit: Int!): [Station]
         station(id: ID!): Station
     }
 `;
