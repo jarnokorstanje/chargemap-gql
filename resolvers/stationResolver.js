@@ -1,4 +1,5 @@
 import Station from '../models/station.js';
+import { bounds } from '../helpers/boundHelper.js';
 
 export default {
     Query: {
@@ -6,10 +7,17 @@ export default {
             try {
                 const start = args.start ? parseInt(args.start) : 0;
                 const limit = args.limit ? parseInt(args.limit) : 10;
-                const res = await Station.find().skip(start).limit(limit);
+
+                let res;
+                if (args.bounds) {
+                    const area = bounds(args.bounds.northEast, args.bounds.southWest);
+                    res = await Station.find().skip(start).limit(limit).where('Location').within(area);
+                } else {
+                    res = await Station.find().skip(start).limit(limit); 
+                }
                 return res;
             } catch (e) {
-                console.log(`Error occured while getting the stations: ${e.message}`);
+                console.log(`Error while getting stations: ${e.message}`);
             }
         },
         station: async (parent, args) => {

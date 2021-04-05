@@ -16,7 +16,15 @@ export default gql`
         coordinates: [Float]
     }
     extend type Query {
-        stations(start: Int!, limit: Int!): [Station]
+        stations(start: Int, limit: Int, bounds: Bounds): [Station]
         station(id: ID!): Station
+    }
+    input Bounds {
+        northEast: LatLng
+        southWest: LatLng
+    }
+    input LatLng {
+        lat: Float
+        lng: Float
     }
 `;
