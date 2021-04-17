@@ -1,6 +1,7 @@
 import Station from '../models/station.js';
 import { bounds } from '../helpers/boundHelper.js';
 import Connection from '../models/connection.js';
+import { AuthenticationError } from 'apollo-server-errors';
 
 export default {
     Query: {
@@ -26,8 +27,13 @@ export default {
         },
     },
     Mutation: {
-        addStation: async (parent, args) => {
+        addStation: async (parent, args, { user }, info) => {
             try {
+                if (!user) {
+                    throw new AuthenticationError(
+                        'Not authenticated to create station'
+                    );
+                }
                 const stationData = { ...args };
 
                 const connections = args.Connections;
@@ -58,8 +64,13 @@ export default {
                 console.log(`Error while creating station ${e.message}`);
             }
         },
-        modifyStation: async (parents, args) => {
+        modifyStation: async (parents, args, { user }, info) => {
             try {
+                if (!user) {
+                    throw new AuthenticationError(
+                        'Not authenticated to modify station'
+                    );
+                }
                 const stationId = args.id;
                 const connections = args.Connections;
                 const stationData = {
@@ -102,8 +113,13 @@ export default {
                 console.log(`Error while updating station ${e.message}`);
             }
         },
-        deleteStation: async (parent, args) => {
+        deleteStation: async (parent, args, { user }, info) => {
             try {
+                if (!user) {
+                    throw new AuthenticationError(
+                        'Not authenticated to delete station'
+                    );
+                }
                 const id = args.id;
                 await Station.findByIdAndDelete(id);
                 return id;
