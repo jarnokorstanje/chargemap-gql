@@ -47,8 +47,10 @@ dotenv.config();
 
       process.env.NODE_ENV = process.env.NODE_ENV || 'development';
       if (process.env.NODE_ENV === 'production') {
+         console.log('launch on production')
          production(app, 3000);
       } else {
+         console.log('launch on development')
          localhost(app, 8000, 3000);
       }
 
